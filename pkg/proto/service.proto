@@ -1,0 +1,172 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "grpc-go/pkg/proto";
+
+service MyService {
+  rpc CreateAccount(CreateAccountRequest) returns (AccountResponse);
+  rpc GetAccount(GetAccountRequest) returns (AccountResponse);
+  rpc UpdateAccount(UpdateAccountRequest) returns (AccountResponse);
+  rpc DeleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse);
+
+  rpc CreatePreference(CreatePreferenceRequest) returns (PreferenceResponse);
+  rpc GetPreference(GetPreferenceRequest) returns (PreferenceResponse);
+  rpc UpdatePreference(UpdatePreferenceRequest) returns (PreferenceResponse);
+  rpc DeletePreference(DeletePreferenceRequest) returns (DeletePreferenceResponse);
+
+  rpc CreateRole(CreateRoleRequest) returns (RoleResponse);
+  rpc GetRole(GetRoleRequest) returns (RoleResponse);
+  rpc UpdateRole(UpdateRoleRequest) returns (RoleResponse);
+  rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse);
+
+  rpc CreateOrder(CreateOrderRequest) returns (OrderResponse);
+  rpc GetOrder(GetOrderRequest) returns (OrderResponse);
+  rpc UpdateOrder(UpdateOrderRequest) returns (OrderResponse);
+  rpc DeleteOrder(DeleteOrderRequest) returns (DeleteOrderResponse);
+
+  rpc UploadFile(stream UploadFileRequest) returns (UploadFileResponse);
+}
+
+message CreateAccountRequest {
+  string username = 1;
+  string email = 2;
+  string password = 3;
+}
+
+message GetAccountRequest {
+  int64 id = 1;
+}
+
+message UpdateAccountRequest {
+  int64 id = 1;
+  string username = 2;
+  string email = 3;
+  string password = 4;
+  string status = 5;
+}
+
+message DeleteAccountRequest {
+  int64 id = 1;
+}
+
+message AccountResponse {
+  int64 id = 1;
+  string username = 2;
+  string email = 3;
+  string status = 4;
+}
+
+message DeleteAccountResponse {
+  bool success = 1;
+}
+
+message CreatePreferenceRequest {
+  int64 account_id = 1;
+  string theme = 2;
+  bool notifications = 3;
+  string locale = 4;
+}
+
+message GetPreferenceRequest {
+  int64 id = 1;
+}
+
+message UpdatePreferenceRequest {
+  int64 id = 1;
+  string theme = 2;
+  bool notifications = 3;
+  string locale = 4;
+}
+
+message DeletePreferenceRequest {
+  int64 id = 1;
+}
+
+message PreferenceResponse {
+  int64 id = 1;
+  int64 account_id = 2;
+  string theme = 3;
+  bool notifications = 4;
+  string locale = 5;
+}
+
+message DeletePreferenceResponse {
+  bool success = 1;
+}
+
+message CreateRoleRequest {
+  string name = 1;
+  repeated string permissions = 2;
+}
+
+message GetRoleRequest {
+  int64 id = 1;
+}
+
+message UpdateRoleRequest {
+  int64 id = 1;
+  string name = 2;
+  repeated string permissions = 3;
+}
+
+message DeleteRoleRequest {
+  int64 id = 1;
+}
+
+message RoleResponse {
+  int64 id = 1;
+  string name = 2;
+  repeated string permissions = 3;
+}
+
+message DeleteRoleResponse {
+  bool success = 1;
+}
+
+message CreateOrderRequest {
+  int64 account_id = 1;
+  repeated OrderItem items = 2;
+}
+
+message OrderItem {
+  string product = 1;
+  int32 quantity = 2;
+  float price = 3;
+}
+
+message GetOrderRequest {
+  int64 id = 1;
+}
+
+message UpdateOrderRequest {
+  int64 id = 1;
+  repeated OrderItem items = 2;
+  string status = 3;
+}
+
+message DeleteOrderRequest {
+  int64 id = 1;
+}
+
+message OrderResponse {
+  int64 id = 1;
+  int64 account_id = 2;
+  repeated OrderItem items = 3;
+  float total = 4;
+  string status = 5;
+}
+
+message DeleteOrderResponse {
+  bool success = 1;
+}
+
+message UploadFileRequest {
+  string filename = 1;
+  bytes chunk_data = 2;
+}
+
+message UploadFileResponse {
+  bool success = 1;
+  string message = 2;
+}
